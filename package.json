@@ -1,6 +1,6 @@
 {
   "name": "productarena-cli",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "CLI tool for the Product Arena API — vote on products, manage lists, and explore leaderboards.",
   "type": "module",
   "bin": {
