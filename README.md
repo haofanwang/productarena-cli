@@ -4,10 +4,19 @@ A command-line tool for interacting with the [Product Arena](https://www.product
 
 ## Installation
 
+Install globally from npm:
+
 ```bash
+npm install -g productarena-cli
+```
+
+Or install from source:
+
+```bash
+git clone https://github.com/haofanwang/productarena-cli.git
 cd productarena-cli
 npm install
-npm link    # makes `productarena` available globally
+npm link
 ```
 
 ## Quick Start
