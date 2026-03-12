@@ -1,0 +1,43 @@
+{
+  "name": "productarena-cli",
+  "version": "0.1.0",
+  "description": "CLI tool for the Product Arena API — vote on products, manage lists, and explore leaderboards.",
+  "type": "module",
+  "bin": {
+    "productarena": "./bin/productarena.js"
+  },
+  "files": [
+    "bin/",
+    "src/",
+    "README.md"
+  ],
+  "scripts": {
+    "start": "node bin/productarena.js"
+  },
+  "keywords": [
+    "product-arena",
+    "cli",
+    "api",
+    "leaderboard",
+    "product-management"
+  ],
+  "author": "Product Arena",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/haofanwang/productarena-cli.git",
+    "directory": "productarena-cli"
+  },
+  "homepage": "https://www.productarena.co",
+  "bugs": {
+    "url": "https://github.com/haofanwang/productarena-cli/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "cli-table3": "^0.6.5",
+    "commander": "^12.1.0"
+  }
+}
