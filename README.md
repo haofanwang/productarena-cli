@@ -31,8 +31,8 @@ productarena leaderboard
 # Save your API key
 productarena config set-key pa_xxxx
 
-# Set a custom base URL (e.g. for local development)
-productarena config set-url http://localhost:3000
+# Set a custom base URL
+productarena config set-url https://www.productarena.co
 
 # View current config
 productarena config show
@@ -108,18 +108,8 @@ Every command supports these flags:
 # Override API key for a single command
 productarena --key pa_xxxx products list
 
-# Override base URL (useful for local testing)
-productarena --base-url http://localhost:3000 leaderboard
-```
-
-## Local Development
-
-To test against your local Product Arena instance:
-
-```bash
-productarena config set-url http://localhost:3000
-productarena leaderboard
-productarena stats
+# Override base URL
+productarena --base-url https://www.productarena.co leaderboard
 ```
 
 ## License
