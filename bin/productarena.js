@@ -98,7 +98,7 @@ configCmd
 
 // ── Products ────────────────────────────────────────────
 
-const productsCmd = program.command("products").description("📦  Manage your Hits & Misses product lists");
+const productsCmd = program.command("products").description("📦  Manage your Hits, Misses & TBD product lists");
 
 productsCmd
   .command("list")
@@ -146,13 +146,13 @@ productsCmd
 productsCmd
   .command("add <url>")
   .description("Add a product to your list")
-  .requiredOption("--type <type>", "hits or misses")
+  .requiredOption("--type <type>", "hits, misses, or tbd")
   .option("--category <cat>", "Category: image-video, audio, agent, productivity")
   .action(async (url, opts) => {
     requireKey();
     try {
       const result = await getClient().addProduct(url, opts.type, opts.category);
-      const icon = opts.type === "hits" ? "🔥" : "💀";
+      const icon = opts.type === "hits" ? "🔥" : opts.type === "tbd" ? "🤔" : "💀";
       console.log(
         chalk.green("✓") +
           ` ${icon} Added ${chalk.bold(result.title || url)} (${result.domain || ""}) to ${opts.type}`
@@ -279,6 +279,72 @@ commentsCmd
     }
   });
 
+// ── Bookmarks ───────────────────────────────────────────
+
+const bookmarksCmd = program.command("bookmarks").description("🔖  Manage your bookmarks");
+
+bookmarksCmd
+  .command("list")
+  .description("List your bookmarks")
+  .action(async () => {
+    requireKey();
+    try {
+      const items = await getClient().getBookmarks();
+      if (!items || !items.length) {
+        console.log(chalk.dim("No bookmarks yet."));
+        return;
+      }
+
+      console.log(`\n  ${chalk.bold("🔖 Bookmarks")}  (${items.length} total)\n`);
+      const table = new Table({
+        head: ["#", "ID", "Title", "URL"].map((h) => chalk.dim(h)),
+        colWidths: [5, 28, 30, 40],
+        wordWrap: true,
+        style: { "padding-left": 1, "padding-right": 1 },
+      });
+      items.forEach((b, i) => {
+        table.push([
+          chalk.dim(String(i + 1)),
+          chalk.dim(b.id || ""),
+          b.title || "—",
+          chalk.cyan(b.url || ""),
+        ]);
+      });
+      console.log(table.toString());
+    } catch (err) {
+      handleError(err);
+    }
+  });
+
+bookmarksCmd
+  .command("add <url>")
+  .description("Bookmark a URL")
+  .action(async (url) => {
+    requireKey();
+    try {
+      const result = await getClient().addBookmark(url);
+      console.log(
+        chalk.green("✓") +
+          ` 🔖 Bookmarked ${chalk.bold(result.title || url)} (${chalk.dim(result.url)})`
+      );
+    } catch (err) {
+      handleError(err);
+    }
+  });
+
+bookmarksCmd
+  .command("remove <id>")
+  .description("Remove a bookmark by its ID")
+  .action(async (id) => {
+    requireKey();
+    try {
+      await getClient().removeBookmark(id);
+      console.log(chalk.green("✓") + ` Removed bookmark ${chalk.bold(id)}`);
+    } catch (err) {
+      handleError(err);
+    }
+  });
+
 // ── Stats ───────────────────────────────────────────────
 
 program
@@ -312,9 +378,10 @@ program
       const data = await getClient().getProducts();
       const hits = (data.hits || []).length;
       const misses = (data.misses || []).length;
+      const tbd = (data.tbd || []).length;
       console.log(
         chalk.green("✓") +
-          ` API key is valid!  You have ${chalk.bold(hits)} hits and ${chalk.bold(misses)} misses.`
+          ` API key is valid!  You have ${chalk.bold(hits)} hits, ${chalk.bold(misses)} misses, and ${chalk.bold(tbd)} tbd.`
       );
     } catch (err) {
       handleError(err);

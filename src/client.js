@@ -90,6 +90,20 @@ export class ProductArenaClient {
     return this._request("GET", "/api/leaderboard", { auth: false, params });
   }
 
+  // ── Bookmarks ─────────────────────────────────────────
+
+  getBookmarks() {
+    return this._request("GET", "/api/bookmarks");
+  }
+
+  addBookmark(url) {
+    return this._request("POST", "/api/bookmarks", { body: { url } });
+  }
+
+  removeBookmark(id) {
+    return this._request("DELETE", "/api/bookmarks", { body: { id } });
+  }
+
   // ── Stats ─────────────────────────────────────────────
 
   getStats() {

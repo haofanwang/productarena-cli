@@ -1,6 +1,6 @@
 # 🏟 Product Arena CLI
 
-A command-line tool for interacting with the [Product Arena](https://www.productarena.co) API — vote on products, manage your Hits & Misses lists, explore leaderboards, and post comments.
+A command-line tool for interacting with the [Product Arena](https://www.productarena.co) API — vote on products, manage your Hits, Misses & TBD lists, manage bookmarks, explore leaderboards, and post comments.
 
 ## Installation
 
@@ -54,14 +54,18 @@ You can also use environment variables:
 ### Products
 
 ```bash
-# List your Hits & Misses
+# List your Hits, Misses & TBD
 productarena products list
 
 # Filter by type
 productarena products list --type hits
+productarena products list --type tbd
 
 # Add a product to Hits
 productarena products add https://cursor.com --type hits
+
+# Add a product to TBD
+productarena products add https://example.com --type tbd
 
 # Add with a category
 productarena products add https://suno.ai --type hits --category audio
@@ -71,6 +75,19 @@ productarena products remove https://cursor.com
 
 # Remove by domain
 productarena products remove cursor.com --by domain
+```
+
+### Bookmarks
+
+```bash
+# List your bookmarks
+productarena bookmarks list
+
+# Bookmark a URL
+productarena bookmarks add https://example.com
+
+# Remove a bookmark by ID
+productarena bookmarks remove clx...
 ```
 
 ### Leaderboard
@@ -102,7 +119,7 @@ productarena comments add cursor.com "Amazing code editor!"
 # Platform stats
 productarena stats
 
-# Test your API key
+# Test your API key (shows hits, misses, and tbd counts)
 productarena whoami
 
 # Version info
